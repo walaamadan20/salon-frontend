@@ -36,6 +36,8 @@ function App() {
           </>
     )
   }
+            <Route element={<h1>Homepage</h1>} path='/'/>
+
 
 </Routes>
 </>

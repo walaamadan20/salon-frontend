@@ -21,7 +21,7 @@ function CreateProduct0() {
 
             const createProduct0 = await createProduct(formData)
     
-            navigate("/login")
+            navigate("/")
 
         }
         catch(err){
