@@ -6,19 +6,45 @@ import Signup from './pages/Signup'
 import Navbar from './components/Navbar'
 import ValidateIsLoggedIn from './validators/ValidateIsLoggedIn'
 import ValidateIsLoggedOut from './validators/ValidateIsLoggedOut'
+import { useContext } from 'react'
+import { authContext } from './context/AuthContext'
+import CreateProduct from './pages/CreateProduct'
+
 
 function App() {
 
+  const {user} = useContext(authContext)
+
 
   return (
-    <>
-      <Navbar/>
-      <Routes>
-        <Route path="/signup" element={<Signup/>}/>
-        <Route path="/login" element={<Login/>}/>
-      </Routes>
-    </>
+          <>
+          <h1>Hello</h1>
+          <Navbar/>
+          <Routes>
+            {
+              user ? (
+                <>
+                  <Route path="/products/create" element={<CreateProduct/>} />
+                </>
+
+              ):
+              (
+                <>
+                  <Route path="/signup" element={<Signup/>}/>
+                  <Route path="/login" element={<Login/>}/>
+
+          </>
+    )
+  }
+            <Route element={<h1>Homepage</h1>} path='/'/>
+
+
+
+</Routes>
+</>
   )
 }
 
 export default App
+
+

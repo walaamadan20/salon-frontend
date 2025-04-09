@@ -17,6 +17,7 @@ function Login() {
         setFormData({...formData,[e.target.name]:e.target.value})
     }
 
+    
     async function handleSubmit(e){
       e.preventDefault()
       try{
@@ -24,7 +25,7 @@ function Login() {
           console.log(response.data)
           localStorage.setItem("token",response.data.token)
           validateToken()
-          // navigate("/login")
+          navigate("/products/create")
       }
       catch(err){
           console.log(err)
