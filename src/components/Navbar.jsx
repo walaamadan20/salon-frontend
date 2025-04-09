@@ -16,6 +16,8 @@ function Navbar() {
           <>
           <li>Welcome {user.username}</li>
           <button onClick={logout}>Logout</button>
+          <Link to='/signup'><li>Signup</li></Link>
+
           </>
         )}
         {!user && (
