@@ -9,7 +9,7 @@ import ValidateIsLoggedOut from './validators/ValidateIsLoggedOut'
 import { useContext } from 'react'
 import { authContext } from './context/AuthContext'
 import CreateProduct from './pages/CreateProduct'
-
+import UpdateProduct from './pages/UpdateProduct'
 
 function App() {
 
@@ -25,8 +25,8 @@ function App() {
               user ? (
                 <>
                   <Route path="/products/create" element={<CreateProduct/>} />
+                  <Route path="/products/:productId/update" element={<UpdateProduct/>} />
                 </>
-
               ):
               (
                 <>
