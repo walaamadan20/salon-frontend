@@ -24,6 +24,7 @@ function CreateProduct0() {
             navigate("/")
 
         }
+        
         catch(err){
             console.log(er)
         }
