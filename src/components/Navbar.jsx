@@ -15,8 +15,10 @@ function Navbar() {
 
         {user ? (
           <>
+ fatema/products-ui
             <li>Welcome {user.username}</li>
             <li><button onClick={logout}>Logout</button></li>
+
           </>
         ) : (
           <>
