@@ -1,50 +1,52 @@
-import './App.css'
-import {Routes ,Route} from 'react-router'
-import Login from './pages/Login'
-import Homepage from './pages/Homepage'
-import Signup from './pages/Signup'
-import Navbar from './components/Navbar'
-import ValidateIsLoggedIn from './validators/ValidateIsLoggedIn'
-import ValidateIsLoggedOut from './validators/ValidateIsLoggedOut'
-import { useContext } from 'react'
-import { authContext } from './context/AuthContext'
-import CreateProduct from './pages/CreateProduct'
-import UpdateProduct from './pages/UpdateProduct'
+import { useContext } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import './App.css';
+import Navbar from './components/Navbar';
+import { authContext } from './context/AuthContext';
+import CreateProduct from './pages/CreateProduct';
+import Homepage from './pages/Homepage';
+import Login from './pages/Login';
+import ProductDetails from './pages/ProductDetails';
+import ProductList from './pages/ProductList';
+import Signup from './pages/Signup';
+import UpdateProduct from './pages/UpdateProduct';
 
 function App() {
-
-  const {user} = useContext(authContext)
-
+  const { user } = useContext(authContext);
 
   return (
+    <>
+      {user && <Navbar />}
+
+      <Routes>
+        {/* Not logged in → only login/signup */}
+        {!user ? (
           <>
-          <h1>Hello</h1>
-          <Navbar/>
-          <Routes>
-            {
-              user ? (
-                <>
-                  <Route path="/products/create" element={<CreateProduct/>} />
-                  <Route path="/products/:productId/update" element={<UpdateProduct/>} />
-                </>
-              ):
-              (
-                <>
-                  <Route path="/signup" element={<Signup/>}/>
-                  <Route path="/login" element={<Login/>}/>
-
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/login" />} />
           </>
-    )
-  }
-            <Route element={<h1>Homepage</h1>} path='/'/>
+        ) : (
+          <>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/products" element={<ProductList />} />
+            <Route path="/products/:productId" element={<ProductDetails />} />
 
+            {/* Admin-only routes */}
+            {user?.isAdmin && (
+              <>
+                <Route path="/products/create" element={<CreateProduct />} />
+                <Route path="/products/:productId/update" element={<UpdateProduct />} />
+              </>
+            )}
 
-
-</Routes>
-</>
-  )
+            {/* Fallback redirect */}
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
+        )}
+      </Routes>
+    </>
+  );
 }
 
-export default App
-
-
+export default App;
