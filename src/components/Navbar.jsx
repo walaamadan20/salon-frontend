@@ -1,31 +1,29 @@
-import { Link } from "react-router"
 import { useContext } from "react"
+import { Link } from "react-router-dom"
 import { authContext } from "../context/AuthContext"
 
-
 function Navbar() {
-  const {user, logout} = useContext(authContext)
-
+  const { user, logout } = useContext(authContext)
 
   return (
     <div>
       <ul>
-        <Link to="/"><li>Homepage</li></Link>
-        {user && (
+        <li><Link to="/">Homepage</Link></li>
 
+        {/* Public route: visible to both admins and customers */}
+        <li><Link to="/products">All Products</Link></li>
+
+        {user ? (
           <>
-          <li>Welcome {user.username}</li>
-          <button onClick={logout}>Logout</button>
+            <li>Welcome {user.username}</li>
+            <li><button onClick={logout}>Logout</button></li>
+          </>
+        ) : (
+          <>
+            <li><Link to='/login'>Login</Link></li>
+            <li><Link to='/signup'>Signup</Link></li>
           </>
         )}
-        {!user && (
-          <>
-          <Link to='/login'><li>Login</li></Link>
-          <Link to='/signup'><li>Signup</li></Link>
-          </>
-        )}
-        
-
       </ul>
     </div>
   )
