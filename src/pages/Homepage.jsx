@@ -1,25 +1,37 @@
-import {useContext,useEffect} from 'react'
-import { authContext } from '../context/AuthContext'
 import axios from 'axios'
+import { useContext, useEffect } from 'react'
+import { authContext } from '../context/AuthContext'
 
 function Homepage() {
-  // useContext(): allows me to consume the context
+  const { user } = useContext(authContext)
 
-  // sending request to protected route that needs a token
-  async function callProtectedRoute(){
-    const token = localStorage.getItem("token")
-    const response= await axios.get(`${import.meta.env.VITE_BACKEND_URL}/test-jwt/checkout`,{headers:{Authorization:`Bearer ${token}`}})
-    console.log(response.data)
-  }
+  useEffect(() => {
+    async function callProtectedRoute() {
+      try {
+        const token = localStorage.getItem("token")
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/test-jwt/checkout`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        console.log("Protected route response:", response.data)
+      } catch (err) {
+        console.error("Error calling protected route:", err)
+      }
+    }
 
-  callProtectedRoute()
+    callProtectedRoute()
+  }, [])
+
   return (
     <div>
-      Homepage
-      <H1>cREATE PRODUCT</H1>
+      <h1>Homepage</h1>
+      <p>Welcome {user?.username}</p>
     </div>
   )
 }
-
 
 export default Homepage
