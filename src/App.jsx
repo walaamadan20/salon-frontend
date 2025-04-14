@@ -1,3 +1,4 @@
+
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import './App.css';
@@ -21,6 +22,7 @@ import BookingsPage from './pages/BookingsPage';
 import ValidateIsLoggedIn from './validators/ValidateIsLoggedIn';
 import ValidateIsLoggedOut from './validators/ValidateIsLoggedOut';
 
+
 function App() {
   const { user } = useContext(authContext);
 
@@ -29,6 +31,7 @@ function App() {
       {user && <Navbar />}
 
       <Routes>
+
         {/* Public Routes */}
         <Route path="/" element={<Homepage />} />
 
@@ -59,6 +62,7 @@ function App() {
 
         {/* Catch-all fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
+
       </Routes>
     </>
   );

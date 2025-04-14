@@ -2,7 +2,9 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { authContext } from "../context/AuthContext";
+
 import OrderButton from "../components/orderButton";
+
 
 function ProductList() {
   const { user } = useContext(authContext);
@@ -19,6 +21,7 @@ function ProductList() {
   const fetchProducts = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/product`);
+
       setProducts(res.data.reverse());
     } catch (err) {
       console.error("Error fetching products:", err);
@@ -45,6 +48,7 @@ function ProductList() {
         headers: { Authorization: `Bearer ${token}` }
       });
 
+
       setFormData({ name: "", description: "", price: "", stock: "" });
       setSuccessMessage(" Product created successfully!");
       fetchProducts();
@@ -57,7 +61,9 @@ function ProductList() {
 
   return (
     <div style={{ padding: "1rem", maxWidth: "600px", margin: "auto" }}>
+
       <h2> All Products</h2>
+
 
       {user?.isAdmin && (
         <div style={{ marginBottom: "20px" }}>
@@ -99,6 +105,7 @@ function ProductList() {
         </div>
       )}
 
+
       {products.map((product) => (
         <div key={product._id} style={{ marginBottom: "1.5rem", padding: "10px", borderBottom: "1px solid #ccc" }}>
           <h3>{product.name}</h3>
@@ -107,6 +114,7 @@ function ProductList() {
           <p>Stock: {product.stock}</p>
           <Link to={`/products/${product._id}`}> View Details</Link>
           {!user?.isAdmin && <OrderButton productId={product._id} stock={product.stock} />}
+
         </div>
       ))}
     </div>
