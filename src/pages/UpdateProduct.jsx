@@ -1,7 +1,9 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import {useNavigate, useParams} from 'react-router'
-import { createProduct } from '../service/productService'
+
+import { createProduct } from '../services/productService'
+
 
 function UpdateProduct() {
     const [formData,setFormData] = useState({

@@ -3,6 +3,9 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { authContext } from "../context/AuthContext";
 
+import OrderButton from "../components/orderButton";
+
+
 function ProductList() {
   const { user } = useContext(authContext);
   const [products, setProducts] = useState([]);
@@ -18,7 +21,7 @@ function ProductList() {
   const fetchProducts = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/product`);
-      // Newest first
+
       setProducts(res.data.reverse());
     } catch (err) {
       console.error("Error fetching products:", err);
@@ -45,12 +48,11 @@ function ProductList() {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      // Reset form + show success message + refresh
+
       setFormData({ name: "", description: "", price: "", stock: "" });
-      setSuccessMessage("✅ Product created successfully!");
+      setSuccessMessage(" Product created successfully!");
       fetchProducts();
 
-      // Hide success message after 2.5s
       setTimeout(() => setSuccessMessage(""), 2500);
     } catch (err) {
       console.error("Error creating product:", err.response?.data || err.message);
@@ -59,9 +61,10 @@ function ProductList() {
 
   return (
     <div style={{ padding: "1rem", maxWidth: "600px", margin: "auto" }}>
-      <h2>🛍️ All Products</h2>
 
-      {/* Admin-only form */}
+      <h2> All Products</h2>
+
+
       {user?.isAdmin && (
         <div style={{ marginBottom: "20px" }}>
           <h3>Create New Product</h3>
@@ -102,14 +105,16 @@ function ProductList() {
         </div>
       )}
 
-      {/* Product List */}
+
       {products.map((product) => (
         <div key={product._id} style={{ marginBottom: "1.5rem", padding: "10px", borderBottom: "1px solid #ccc" }}>
           <h3>{product.name}</h3>
-          <p>💰 ${product.price}</p>
+          <p> BHD {product.price}</p>
           <p>{product.description}</p>
           <p>Stock: {product.stock}</p>
-          <Link to={`/products/${product._id}`}>🔍 View Details</Link>
+          <Link to={`/products/${product._id}`}> View Details</Link>
+          {!user?.isAdmin && <OrderButton productId={product._id} stock={product.stock} />}
+
         </div>
       ))}
     </div>

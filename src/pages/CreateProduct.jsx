@@ -1,14 +1,20 @@
+
+
 import {useState} from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router'
-import { createProduct } from '../service/productService'
+import { createProduct } from '../services/productService'
+
 
 function CreateProduct0() {
     const [formData,setFormData] = useState({
         name: "",
         price: 1.00,
         description: "",
-        stock:0
+
+        stock:0,
+        image: null
+
     })
 
     const navigate = useNavigate()
@@ -23,13 +29,13 @@ function CreateProduct0() {
     
             navigate("/")
 
-        }
-        
+
+        } 
+
         catch(err){
             console.log(er)
         }
       
-
 
 
     }
@@ -83,6 +89,14 @@ function CreateProduct0() {
 
 
                  />
+
+
+        <label htmlFor="image">Image</label>
+        <input type="file"
+         name="image"
+          accept="image/*" 
+          onChange={handleChange} />
+
         
         <button>Submit</button>
       </form>
@@ -90,4 +104,6 @@ function CreateProduct0() {
   )}
 
 
+
 export default CreateProduct0
+
