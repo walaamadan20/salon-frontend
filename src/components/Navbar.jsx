@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { authContext } from "../context/AuthContext";
@@ -41,6 +42,7 @@ function Navbar() {
                 {user.isAdmin ? "All Confirmed Orders" : "My Orders"}
               </Link>
             </li>
+
           )}
 
           {user && (
@@ -162,7 +164,9 @@ function Navbar() {
         }
       `}</style>
     </>
+
   );
 }
 
 export default Navbar;
+

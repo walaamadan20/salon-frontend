@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import MainLayout from '../components/MainLayout'; // تأكدي من المسار
+
 function UpdateProduct() {
   const [formData, setFormData] = useState({
     name: "",
@@ -116,6 +117,7 @@ function UpdateProduct() {
   );
 }
 export default UpdateProduct;
+
 
 
 

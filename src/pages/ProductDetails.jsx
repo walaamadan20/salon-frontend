@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import MainLayout from '../components/MainLayout';
 import OrderButton from '../components/orderButton';
 import { authContext } from '../context/AuthContext';
+
 function ProductDetails() {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
@@ -68,6 +69,7 @@ function ProductDetails() {
         )}
       </div>
     </MainLayout>
+
   );
 }
 // Styles

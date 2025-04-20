@@ -30,6 +30,7 @@ function CreateProduct() {
       navigate(`/products/${createdProduct._id}`);
     } catch (err) {
       console.error(":x: Error creating product:", err.response?.data || err.message);
+
     }
   };
   return (
@@ -103,4 +104,20 @@ export default CreateProduct;
 
 
 
+
+        <label htmlFor="image">Image</label>
+        <input type="file"
+         name="image"
+          accept="image/*" 
+          onChange={handleChange} />
+
+        
+        <button>Submit</button>
+      </form>
+    </div>
+  )}
+
+
+
+export default CreateProduct0
 

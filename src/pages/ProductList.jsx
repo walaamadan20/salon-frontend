@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import MainLayout from "../components/MainLayout";
 import OrderButton from "../components/orderButton";
 import { authContext } from "../context/AuthContext";
+
 function ProductList() {
   const { user } = useContext(authContext);
   const [products, setProducts] = useState([]);
@@ -17,6 +19,7 @@ function ProductList() {
   const fetchProducts = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/product`);
+
       setProducts(res.data.reverse());
     } catch (err) {
       console.error("Error fetching products:", err);
@@ -38,6 +41,7 @@ function ProductList() {
       await axios.post(`${import.meta.env.VITE_BACKEND_URL}/product/new`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
+
       setFormData({ name: "", description: "", price: "", stock: "" });
       setSuccessMessage(":white_tick: Product created successfully!");
       fetchProducts();
@@ -60,6 +64,7 @@ function ProductList() {
           <h3 style={{ marginBottom: "1rem", color: "#B45C7A" }}>Create New Product</h3>
           {successMessage && <p style={{ color: "green", fontWeight: "bold" }}>{successMessage}</p>}
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+
             <input
               name="name"
               placeholder="Product Name"
@@ -97,7 +102,9 @@ function ProductList() {
             <button type="submit" style={submitBtnStyle}>Create Product</button>
           </form>
         </div>
+
       )} */}
+
       {products.map((product) => (
         <div
           key={product._id}
@@ -112,6 +119,7 @@ function ProductList() {
           <h3 style={{ color: "#B45C7A" }}>{product.name}</h3>
           <p><strong>BHD:</strong> {product.price}</p>
           <p>{product.description}</p>
+
           <p><strong>Stock:</strong> {product.stock}</p>
           <Link to={`/products/${product._id}`} style={linkStyle}>View Details</Link>
           {!user?.isAdmin && (
@@ -119,6 +127,7 @@ function ProductList() {
               <OrderButton productId={product._id} stock={product.stock} />
             </div>
           )}
+
         </div>
       ))}
     </MainLayout>
