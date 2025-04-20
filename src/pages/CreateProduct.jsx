@@ -1,97 +1,106 @@
-
-import {useState} from 'react'
-import axios from 'axios'
-import {useNavigate} from 'react-router'
-import { createProduct } from '../services/productService'
-
-function CreateProduct0() {
-    const [formData,setFormData] = useState({
-        name: "",
-        price: 1.00,
-        description: "",
-        stock:0,
-        image: null
-    })
-
-    const navigate = useNavigate()
-
-    async function handleSubmit(e){
-        e.preventDefault()
-
-        try{
-            const token = localStorage.getItem("token")
-
-            const createProduct0 = await createProduct(formData)
-    
-            navigate("/")
-
-        } 
-        catch(err){
-            console.log(er)
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import MainLayout from "../components/MainLayout";
+function CreateProduct() {
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    price: "",
+    stock: ""
+  });
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/product/new`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
         }
-      
+      });
+      const createdProduct = res.data;
+      navigate(`/products/${createdProduct._id}`);
+    } catch (err) {
+      console.error(":x: Error creating product:", err.response?.data || err.message);
     }
-
-    function handleChange(e){
-        setFormData({...formData,[e.target.name]:e.target.value})
-    }
-
+  };
   return (
-    <div>
-      <h1>Create Product</h1>
-
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name</label>
-        <input 
-        type="text" 
-        name='name'
-        id='name'
-        value={formData.name}
-        onChange={handleChange}
-        />
-  
-        <label htmlFor="description">Description:</label>
-        <textarea
-        name='description'
-        id='description'
-        value={formData.description}
-        onChange={handleChange}
-        required
+    <MainLayout>
+      <div style={{ padding: "2rem", maxWidth: "600px", margin: "auto" }}>
+        <h2 style={{ textAlign: "center", marginBottom: "1rem", color: "#8A2D5D" }}>Create New Product</h2>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+            backgroundColor: "#FFF3F7",
+            padding: "2rem",
+            borderRadius: "12px",
+            boxShadow: "0 0 10px rgba(0,0,0,0.1)"
+          }}
         >
-            
-        </textarea>
+          <input
+            name="name"
+            placeholder="Product Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="description"
+            placeholder="Description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="number"
+            name="stock"
+            placeholder="Stock"
+            value={formData.stock}
+            onChange={handleChange}
+            required
+          />
+          <button
+            type="submit"
+            style={{
+              backgroundColor: "#D36E9B",
+              color: "white",
+              padding: "0.75rem",
+              border: "none",
+              borderRadius: "8px",
+              fontWeight: "bold",
+              cursor: "pointer"
+            }}
+          >
+            Create Product
+          </button>
+        </form>
+      </div>
+    </MainLayout>
+  );
+}
+export default CreateProduct;
 
 
-        <label htmlFor="price">Price</label>
-        <input 
-        type="decimle" 
-        name='price'
-        id='price'
-        value={formData.price}
-        onChange={handleChange}
-        />
-
-        <label htmlFor="stock">Stock</label>
-        <input type="number"
-                id='stock'
-                name='stock' 
-                value={formData.stock}
-                onChange={handleChange}
-                min={0}
 
 
-                 />
-
-        <label htmlFor="image">Image</label>
-        <input type="file"
-         name="image"
-          accept="image/*" 
-          onChange={handleChange} />
-        
-        <button>Submit</button>
-      </form>
-    </div>
-  )}
 
 
-export default CreateProduct0

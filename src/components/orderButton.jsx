@@ -14,20 +14,20 @@ function OrderButton({ productId, stock }) {
     }
 
     if (quantity < 1 || quantity > stock) {
-      return setMessage(` Please enter a quantity between 1 and ${stock}`);
+      return setMessage( `Please enter a quantity between 1 and ${stock}`);
     }
 
     if (stock == 0 ) {
-      return setMessage(` Item is Out of Stock`);
+      return setMessage( `Item is Out of Stock`);
     }
 
     if (stock < quantity ) {
-      return setMessage(` Sorry, the quantity requested not Available`);
+      return setMessage( `Sorry, the quantity requested not Available`);
     }
 
     try {
-      await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/orders`,
+      await axios.post(`
+        ${import.meta.env.VITE_BACKEND_URL}/api/orders`,
         {
           products: [{ product: productId, quantity }],
         },
@@ -40,7 +40,7 @@ function OrderButton({ productId, stock }) {
       setMessage(" Order placed successfully!");
       setQuantity(1);
     } catch (err) {
-      setMessage(` ${err.response?.data?.error || "Order failed"}`);
+      setMessage(`${err.response?.data?.error || "Order failed"}`);
     }
   };
 

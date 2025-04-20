@@ -16,6 +16,7 @@ import ServicesPage from './pages/ServicesPage';
 import ServiceDetailPage from './pages/ServiceDetailPage';
 import OrderList from './pages/OrderList';
 import BookingsPage from './pages/BookingsPage';
+import ConfirmedOrders from "./pages/ConfirmedOrders";
 
 // Guards
 import ValidateIsLoggedIn from './validators/ValidateIsLoggedIn';
@@ -55,6 +56,7 @@ function App() {
           <Route path="/services/:serviceId" element={<ValidateIsLoggedIn><ServiceDetailPage /></ValidateIsLoggedIn>} />
           <Route path="/orders" element={<ValidateIsLoggedIn><OrderList /></ValidateIsLoggedIn>} />
           <Route path="/bookings" element={<ValidateIsLoggedIn><BookingsPage /></ValidateIsLoggedIn>} />
+          <Route path="/confirmed-orders" element={<ValidateIsLoggedIn><ConfirmedOrders /></ValidateIsLoggedIn>} />
        
 
         {/* Catch-all fallback */}
